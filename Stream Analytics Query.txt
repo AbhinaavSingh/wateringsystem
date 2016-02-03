@@ -1,0 +1,11 @@
+SELECT
+    device_id, AVG (value) AS readings, System.Timestamp AS timeOfCompletion
+INTO
+    ProcessedData
+FROM
+    CallStream
+TIMESTAMP BY time
+GROUP BY
+    device_id,SlidingWindow(minute,1)
+HAVING
+    readings > 580;
